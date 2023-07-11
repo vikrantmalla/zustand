@@ -1,20 +1,17 @@
 import { create } from 'zustand'
-import {devtools, persist} from 'zustand/middleware'
 
-const useStore = create((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
+const initialState = {
+    counter: 0,
+}
+
+const useAppStore = create((set) => ({
+  ...initialState,
+  increaseCounter: () => set((state) => ({ counter: state.counter + 1 })),
+  decreaseCounter: () => set((state) => ({ counter: state.counter - 1 })),
+  increaseBy: (num) => set((state) => ({ counter: state.counter + num })),
+  decreaseBy: (num) => set((state) => ({ counter: state.counter - num })),
+  reset: () => set(initialState),
 }))
 
 
-const useAppStore = create(
-    devtools(
-        persist(useStore, {
-            name: "count",
-        })
-    )
-)
-
-
-export default useAppStore; 
+export default useAppStore;
